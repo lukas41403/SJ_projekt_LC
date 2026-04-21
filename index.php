@@ -53,11 +53,11 @@ https://templatemo.com/tm-583-festava-live
 
             <nav class="navbar navbar-expand-lg">
                 <div class="container">
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href="index.php">
                         Festava Live
                     </a>
 
-                    <a href="ticket.html" class="btn custom-btn d-lg-none ms-auto me-4">Buy Ticket</a>
+                    <a href="ticket.php" class="btn custom-btn d-lg-none ms-auto me-4">Buy Ticket</a>
     
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -90,7 +90,7 @@ https://templatemo.com/tm-583-festava-live
                             </li>
                         </ul>
 
-                        <a href="ticket.html" class="btn custom-btn d-lg-block d-none">Buy Ticket</a>
+                        <a href="ticket.php" class="btn custom-btn d-lg-block d-none">Buy Ticket</a>
                     </div>
                 </div>
             </nav>
@@ -438,7 +438,7 @@ https://templatemo.com/tm-583-festava-live
                                     <li class="pricing-list-item">standard content</li>
                                 </ul>
 
-                                <a class="link-fx-1 color-contrast-higher mt-4" href="ticket.html">
+                                <a class="link-fx-1 color-contrast-higher mt-4" href="ticket.php">
                                     <span>Buy Ticket</span>
                                     <svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="15.5"></circle><line x1="10" y1="18" x2="16" y2="12"></line><line x1="16" y1="12" x2="22" y2="18"></line></g></svg>
                                 </a>
@@ -467,7 +467,7 @@ https://templatemo.com/tm-583-festava-live
                                     <li class="pricing-list-item">live chat support</li>
                                 </ul>
 
-                                <a class="link-fx-1 color-contrast-higher mt-4" href="ticket.html">
+                                <a class="link-fx-1 color-contrast-higher mt-4" href="ticket.php">
                                     <span>Buy Ticket</span>
                                     <svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="15.5"></circle><line x1="10" y1="18" x2="16" y2="12"></line><line x1="16" y1="12" x2="22" y2="18"></line></g></svg>
                                 </a>

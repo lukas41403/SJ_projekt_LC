@@ -53,11 +53,11 @@ https://templatemo.com/tm-583-festava-live
 
             <nav class="navbar navbar-expand-lg">
                 <div class="container">
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href="index.php">
                         Festava Live
                     </a>
 
-                    <a href="ticket.html" class="btn custom-btn d-lg-none ms-auto me-4">Buy Ticket</a>
+                    <a href="ticket.php" class="btn custom-btn d-lg-none ms-auto me-4">Buy Ticket</a>
     
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -66,31 +66,31 @@ https://templatemo.com/tm-583-festava-live
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav align-items-lg-center ms-auto me-lg-5">
                             <li class="nav-item">
-                                <a class="nav-link click-scroll" href="index.html#section_1">Home</a>
+                                <a class="nav-link click-scroll" href="index.php#section_1">Home</a>
                             </li>
     
                             <li class="nav-item">
-                                <a class="nav-link click-scroll" href="index.html#section_2">About</a>
+                                <a class="nav-link click-scroll" href="index.php#section_2">About</a>
                             </li>
     
                             <li class="nav-item">
-                                <a class="nav-link click-scroll" href="index.html#section_3">Artists</a>
+                                <a class="nav-link click-scroll" href="index.php#section_3">Artists</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link click-scroll" href="index.html#section_4">Schedule</a>
+                                <a class="nav-link click-scroll" href="index.php#section_4">Schedule</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link click-scroll" href="index.html#section_5">Pricing</a>
+                                <a class="nav-link click-scroll" href="index.php#section_5">Pricing</a>
                             </li>
     
                             <li class="nav-item">
-                                <a class="nav-link click-scroll" href="index.html#section_6">Contact</a>
+                                <a class="nav-link click-scroll" href="index.php#section_6">Contact</a>
                             </li>
                         </ul>
 
-                        <a href="ticket.html" class="btn custom-btn d-lg-block d-none">Buy Ticket</a>
+                        <a href="ticket.php" class="btn custom-btn d-lg-block d-none">Buy Ticket</a>
                     </div>
                 </div>
             </nav>
