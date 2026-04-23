@@ -9,7 +9,7 @@ if(!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true
 }
 
 require_once '../db.php';
-require_once '../Player.php';
+require_once '../PlayerModel.php';
 
 $database = new Database();
 $db = $database->connect();

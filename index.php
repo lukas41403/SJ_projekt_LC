@@ -6,7 +6,6 @@
 
     <div class="container d-flex justify-content-center align-items-center">
         <div class="row">
-
             <div class="col-12 mt-auto mb-5 text-center">
                 <small>Vitajte na oficiálnej stránke</small>
                 <h1 class="text-white mb-5">FC Výčapy-Opatovce</h1>
@@ -20,7 +19,6 @@
                         Výčapy-Opatovce, Slovensko
                     </h5>
                 </div>
-
                 <div class="social-share">
                     <ul class="social-icon d-flex align-items-center justify-content-center">
                         <span class="text-white me-3">Sledujte nás:</span>
@@ -33,7 +31,6 @@
                     </ul>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -49,7 +46,6 @@
 <section class="about-section section-padding" id="section_2">
     <div class="container">
         <div class="row">
-
             <div class="col-lg-6 col-12 mb-4 mb-lg-0 d-flex align-items-center">
                 <div class="services-info">
                     <h2 class="text-white mb-4">O FC Výčapy-Opatovce</h2>
@@ -60,7 +56,6 @@
                     <p class="text-white">Rozvíjať futbal v obci a vychovávať mladých talentovaných hráčov.</p>
                 </div>
             </div>
-
             <div class="col-lg-6 col-12">
                 <div class="about-text-wrap">
                     <img src="/SJ_projekt_LC/images/pexels-alexander-suhorucov-6457579.jpg" class="about-image img-fluid">
@@ -75,16 +70,14 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
 
-<!-- HRÁČI - náhľad -->
+<!-- HRÁČI -->
 <section class="artists-section section-padding" id="section_3">
     <div class="container">
         <div class="row justify-content-center">
-
             <div class="col-12 text-center mb-4">
                 <h2>Naši hráči</h2>
                 <p class="text-muted">Spoznajte náš tím</p>
@@ -92,7 +85,7 @@
 
             <?php
             require_once 'db.php';
-            require_once 'Player.php';
+            require_once 'PlayerModel.php';
 
             $database = new Database();
             $db = $database->connect();
@@ -106,7 +99,7 @@
                 <div class="col-lg-3 col-md-6 col-12 mb-4">
                     <div class="artists-thumb">
                         <div class="artists-image-wrap">
-                            <img src="' . (!empty($p['photo']) ? '/SJ_projekt_LC/uploads/players/' . htmlspecialchars($p['photo']) : '/SJ_projekt_LC/images/no-image.jpg') . '" class="artists-image img-fluid">
+                            <img src="' . (!empty($p['photo']) ? '/SJ_projekt_LC/uploads/players/' . htmlspecialchars($p['photo']) : '/SJ_projekt_LC/images/pexels-alexander-suhorucov-6457579.jpg') . '" class="artists-image img-fluid">
                         </div>
                         <div class="artists-hover">
                             <p><strong>Meno:</strong> ' . htmlspecialchars($p['name']) . '</p>
@@ -126,24 +119,21 @@
             <div class="col-12 text-center mt-4">
                 <a href="/SJ_projekt_LC/players.php" class="btn custom-btn">Zobraziť všetkých hráčov</a>
             </div>
-
         </div>
     </div>
 </section>
 
-<!-- AKTUALITY - náhľad -->
+<!-- AKTUALITY -->
 <section class="pricing-section section-padding section-bg" id="section_4">
     <div class="container">
         <div class="row">
-
             <div class="col-12 text-center mb-4">
                 <h2>Najnovšie aktuality</h2>
                 <p class="text-muted">Správy z klubu</p>
             </div>
 
             <?php
-            require_once 'NewsModel.php';
-
+            require_once 'newsModel.php';
             $news = new News($db);
             $latestNews = $news->getLatest(3);
 
@@ -166,7 +156,6 @@
             <div class="col-12 text-center mt-4">
                 <a href="/SJ_projekt_LC/news.php" class="btn custom-btn">Všetky aktuality</a>
             </div>
-
         </div>
     </div>
 </section>
