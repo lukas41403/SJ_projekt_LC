@@ -9,7 +9,7 @@ if(!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true
 }
 
 require_once '../db.php';
-require_once '../Gallery.php';
+require_once '../GalleryModel.php';
 
 $database = new Database();
 $db = $database->connect();

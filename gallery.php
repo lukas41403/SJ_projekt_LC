@@ -1,62 +1,47 @@
 <?php
+require_once 'db.php';
+require_once 'GalleryModel.php';
 
-class Gallery {
+$database = new Database();
+$db = $database->connect();
+$gallery = new Gallery($db);
+$allPhotos = $gallery->getAll();
+?>
 
-    private $conn;
-    private $table = "gallery";
+<?php require_once 'partials/header.php'; ?>
 
-    public $id;
-    public $title;
-    public $filename;
-    public $created_at;
+<section class="section-padding">
+    <div class="container">
+        <div class="row">
 
-    public function __construct($db) {
-        $this->conn = $db;
-    }
+            <div class="col-12 text-center mb-5">
+                <h2>Galéria</h2>
+                <p class="text-muted">Fotografie z klubu a zápasov</p>
+            </div>
 
-    // Vsetky fotky
-    public function getAll() {
-        $query = "SELECT * FROM " . $this->table . " ORDER BY created_at DESC";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt->fetchAll();
-    }
+            <?php if(empty($allPhotos)): ?>
+                <div class="col-12 text-center">
+                    <p class="text-white">Galéria je prázdna.</p>
+                </div>
+            <?php else: ?>
+                <?php foreach($allPhotos as $p): ?>
+                <div class="col-lg-4 col-md-6 col-12 mb-4">
+                    <div class="artists-thumb">
+                        <div class="artists-image-wrap">
+                            <img src="/SJ_projekt_LC/uploads/gallery/<?php echo htmlspecialchars($p['filename']); ?>" 
+                                 class="artists-image img-fluid" style="height:250px; object-fit:cover;">
+                        </div>
+                        <div class="artists-hover">
+                            <p><strong><?php echo htmlspecialchars($p['title']); ?></strong></p>
+                            <p class="text-muted small"><?php echo date('d.m.Y', strtotime($p['created_at'])); ?></p>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
 
-    // Jedna fotka podla ID
-    public function getById($id) {
-        $query = "SELECT * FROM " . $this->table . " WHERE id = ?";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute([$id]);
-        return $stmt->fetch();
-    }
+        </div>
+    </div>
+</section>
 
-    // Pridaj fotku
-    public function create() {
-        $query = "INSERT INTO " . $this->table . " 
-                  (title, filename) 
-                  VALUES (?, ?)";
-
-        $stmt = $this->conn->prepare($query);
-
-        $this->title = htmlspecialchars(strip_tags($this->title));
-
-        if($stmt->execute([
-            $this->title,
-            $this->filename
-        ])) {
-            return true;
-        }
-        return false;
-    }
-
-    // Zmaz fotku
-    public function delete() {
-        $query = "DELETE FROM " . $this->table . " WHERE id = ?";
-        $stmt = $this->conn->prepare($query);
-
-        if($stmt->execute([$this->id])) {
-            return true;
-        }
-        return false;
-    }
-}
+<?php require_once 'partials/footer.php'; ?>
