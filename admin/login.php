@@ -3,9 +3,33 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
 
-if(!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-    header('Location: login.php');
+if(isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
+    header('Location: index.php');
     exit;
+}
+
+require_once '../db.php';
+$database = new Database();
+$db = $database->connect();
+
+$error = '';
+
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = trim($_POST['username'] ?? '');
+    $password = trim($_POST['password'] ?? '');
+
+    $stmt = $db->prepare('SELECT * FROM admins WHERE username = ? LIMIT 1');
+    $stmt->execute([$username]);
+    $admin = $stmt->fetch();
+
+    if($admin && password_verify($password, $admin['password'])) {
+        $_SESSION['admin_logged_in'] = true;
+        $_SESSION['admin_username'] = $admin['username'];
+        header('Location: index.php');
+        exit;
+    } else {
+        $error = 'Nesprávne meno alebo heslo!';
+    }
 }
 ?>
 <!doctype html>
@@ -13,148 +37,80 @@ if(!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin | FC Výčapy-Opatovce</title>
+    <title>Prihlásenie | Admin</title>
     <link href="/SJ_projekt_LC/css/bootstrap.min.css" rel="stylesheet">
     <link href="/SJ_projekt_LC/css/bootstrap-icons.css" rel="stylesheet">
     <style>
-        body { background-color: #1a1a2e; color: #fff; }
-        .sidebar {
+        body {
+            background-color: #1a1a2e;
             min-height: 100vh;
-            background-color: #16213e;
-            padding: 20px 0;
-        }
-        .sidebar a {
-            color: #fff;
-            display: block;
-            padding: 12px 20px;
-            text-decoration: none;
-            transition: background 0.2s;
-        }
-        .sidebar a:hover {
-            background-color: #e84545;
-        }
-        .sidebar .brand {
-            font-size: 1.2rem;
-            font-weight: 700;
-            padding: 15px 20px 30px;
-            border-bottom: 1px solid #ffffff22;
-            margin-bottom: 10px;
-        }
-        .main-content { padding: 30px; }
-        .top-bar {
-            background-color: #16213e;
-            padding: 15px 30px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            border-radius: 8px;
+            justify-content: center;
         }
-        .card-stat {
+        .login-box {
+            background-color: #16213e;
+            padding: 40px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+        }
+        .login-box h2 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-control {
+            background-color: #0f3460;
             border: none;
-            border-radius: 10px;
-            padding: 25px;
+            color: #fff;
+        }
+        .form-control:focus {
+            background-color: #0f3460;
+            color: #fff;
+            box-shadow: 0 0 0 2px #e84545;
+        }
+        .btn-login {
+            background-color: #e84545;
+            color: #fff;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        .btn-login:hover {
+            background-color: #c73535;
             color: #fff;
         }
     </style>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
+    <div class="login-box">
+        <h2><i class="bi-shield-lock me-2"></i>Admin Panel</h2>
+        <p class="text-center text-secondary mb-4">FC Výčapy-Opatovce</p>
 
-        <!-- SIDEBAR -->
-        <div class="col-md-2 px-0 sidebar">
-            <div class="brand">
-                <i class="bi-shield-lock me-2"></i>Admin Panel
+        <?php if($error): ?>
+            <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
+        <?php endif; ?>
+
+        <form method="POST" action="login.php">
+            <div class="mb-3">
+                <label class="form-label text-white">Používateľské meno</label>
+                <input type="text" name="username" class="form-control"
+                       placeholder="admin" required autofocus>
             </div>
-            <a href="index.php"><i class="bi-speedometer2 me-2"></i>Dashboard</a>
-            <a href="players.php"><i class="bi-people me-2"></i>Hráči</a>
-            <a href="news.php"><i class="bi-newspaper me-2"></i>Aktuality</a>
-            <a href="gallery.php"><i class="bi-images me-2"></i>Galéria</a>
-            <hr style="border-color: #ffffff22;">
-            <a href="/SJ_projekt_LC/index.php"><i class="bi-house me-2"></i>Zobraziť web</a>
-            <a href="logout.php"><i class="bi-box-arrow-right me-2"></i>Odhlásiť sa</a>
-        </div>
-
-        <!-- MAIN CONTENT -->
-        <div class="col-md-10 px-0">
-            <div class="main-content">
-                <div class="top-bar">
-                    <h5 class="mb-0">Dashboard</h5>
-                    <span>
-                        <i class="bi-person-circle me-2"></i>
-                        <?php echo htmlspecialchars($_SESSION['admin_username']); ?>
-                    </span>
-                </div>
-
-                <div class="row g-4 mb-4">
-                    <div class="col-md-4">
-                        <div class="card-stat" style="background-color: #e84545;">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h6>Hráči</h6>
-                                    <h2 class="mb-0">
-                                        <?php
-                                        require_once '../db.php';
-                                        $database = new Database();
-                                        $db = $database->connect();
-                                        echo $db->query('SELECT COUNT(*) FROM players')->fetchColumn();
-                                        ?>
-                                    </h2>
-                                </div>
-                                <i class="bi-people" style="font-size:2.5rem; opacity:0.5;"></i>
-                            </div>
-                            <a href="players.php" class="text-white text-decoration-none small">
-                                Spravovať <i class="bi-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="card-stat" style="background-color: #0f3460;">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h6>Aktuality</h6>
-                                    <h2 class="mb-0">
-                                        <?php echo $db->query('SELECT COUNT(*) FROM news')->fetchColumn(); ?>
-                                    </h2>
-                                </div>
-                                <i class="bi-newspaper" style="font-size:2.5rem; opacity:0.5;"></i>
-                            </div>
-                            <a href="news.php" class="text-white text-decoration-none small">
-                                Spravovať <i class="bi-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="card-stat" style="background-color: #16213e; border: 1px solid #ffffff22;">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h6>Galéria</h6>
-                                    <h2 class="mb-0">
-                                        <?php echo $db->query('SELECT COUNT(*) FROM gallery')->fetchColumn(); ?>
-                                    </h2>
-                                </div>
-                                <i class="bi-images" style="font-size:2.5rem; opacity:0.5;"></i>
-                            </div>
-                            <a href="gallery.php" class="text-white text-decoration-none small">
-                                Spravovať <i class="bi-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-4 rounded" style="background-color: #16213e;">
-                    <h5 class="mb-2">Vitajte v admin paneli!</h5>
-                    <p class="text-secondary mb-0">Použite menu vľavo na správu obsahu webu.</p>
-                </div>
-
+            <div class="mb-4">
+                <label class="form-label text-white">Heslo</label>
+                <input type="password" name="password" class="form-control"
+                       placeholder="••••••••" required>
             </div>
-        </div>
+            <button type="submit" class="btn btn-login">
+                <i class="bi-box-arrow-in-right me-2"></i>Prihlásiť sa
+            </button>
+        </form>
     </div>
-</div>
 
-<script src="/SJ_projekt_LC/js/bootstrap.min.js"></script>
+    <script src="/SJ_projekt_LC/js/bootstrap.min.js"></script>
 </body>
 </html>

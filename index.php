@@ -142,7 +142,7 @@
             </div>
 
             <?php
-            require_once 'News.php';
+            require_once 'NewsModel.php';
 
             $news = new News($db);
             $latestNews = $news->getLatest(3);
