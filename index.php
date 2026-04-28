@@ -58,7 +58,7 @@
             </div>
             <div class="col-lg-6 col-12">
                 <div class="about-text-wrap">
-                    <img src="/SJ_projekt_LC/images/pexels-alexander-suhorucov-6457579.jpg" class="about-image img-fluid">
+                    <img src="/SJ_projekt_LC/uploads/images/camp-nou-stadium-fc-2560x1440-19449.jpg" class="about-image img-fluid">
                     <div class="about-text-info d-flex">
                         <div class="d-flex">
                             <i class="about-text-icon bi-trophy"></i>
@@ -99,7 +99,7 @@
                 <div class="col-lg-3 col-md-6 col-12 mb-4">
                     <div class="artists-thumb">
                         <div class="artists-image-wrap">
-                            <img src="' . (!empty($p['photo']) ? '/SJ_projekt_LC/uploads/players/' . htmlspecialchars($p['photo']) : '/SJ_projekt_LC/images/pexels-alexander-suhorucov-6457579.jpg') . '" class="artists-image img-fluid">
+                            <img src="' . (!empty($p['photo']) ? '/SJ_projekt_LC/uploads/players/' . htmlspecialchars($p['photo']) : '/SJ_projekt_LC/images/camp-nou-stadium-fc-2560x1440-19449.jpg') . '" class="artists-image img-fluid">
                         </div>
                         <div class="artists-hover">
                             <p><strong>Meno:</strong> ' . htmlspecialchars($p['name']) . '</p>
